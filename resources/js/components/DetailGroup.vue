@@ -6,6 +6,7 @@
              --><span class="text-80">{{index+1}}</span>
             </span>
             <span class="font-bold">{{group.title}}</span>
+            <span>Send to translation</span>
         </div>
         <component
             v-for="(item, index) in group.fields"
