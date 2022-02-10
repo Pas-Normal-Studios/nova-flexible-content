@@ -11,8 +11,20 @@ $multiselect-placeholder-color: #7c858e;
 
 .translate-button {
     display: none;   
+
+    margin-left: 4px;
  
     [label="German"] & {
+        display: inline-block;
+    }
+}
+
+.copy-button {
+    display: none;   
+
+    margin-left: 4px;
+ 
+    [label="English"] & {
         display: inline-block;
     }
 }

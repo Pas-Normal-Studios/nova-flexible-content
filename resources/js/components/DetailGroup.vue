@@ -1,5 +1,5 @@
 <template>
-    <div :class="componentStyle">
+    <div :class="componentStyle" :id="group.key">
         <div :class="titleStyle" class="flex justify-between" v-if="group.title">
             <div>
                 <span class="block float-left border-r border-40 pr-4 mr-4"><!--
@@ -8,7 +8,11 @@
                 </span>
                 <span class="font-bold">{{group.title}}</span>
             </div>
-            <span v-if="allowTranslation(group.name)" class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
+            <div>
+                <span class="copy-button"><a href="#" @click.prevent="copy('de');" class="text-primary">Copy to German</a></span>
+                <span class="copy-button"><a href="#" @click.prevent="copy('jp');" class="text-primary">Copy to Japanese</a></span>
+                <span v-if="allowTranslation(group.name)" class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
+            </div>
         </div>
         <component
             v-for="(item, index) in group.fields"
@@ -63,6 +67,24 @@ export default {
                     alert('Element sent to translation');
                 });
             }
+        },
+        copy(lang) {
+            axios.get('/custom-nova-actions/story/copy/partial', {
+                params: {
+                    id: this.resourceId, 
+                    content_id: this.group.key,
+                    lang
+                }
+            }).then(response => {
+                let tab;
+                if (lang == 'de') {
+                    tab = 'german';
+                }
+                else if (lang == 'jp') {
+                    tab = 'japanese';
+                }
+                document.location.href = '/admin/resources/stories/' + this.resourceId + '?tab=' + tab + '#' + response.data.key;
+            });
         }
     }
 }
