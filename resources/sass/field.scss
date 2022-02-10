@@ -8,3 +8,11 @@ $multiselect-radius: .5rem;
 $multiselect-placeholder-color: #7c858e;
 
 @import "./multiselect";
+
+.translate-button {
+    display: none;   
+ 
+    [label="German"] & {
+        display: inline-block;
+    }
+}

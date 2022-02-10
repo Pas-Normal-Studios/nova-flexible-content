@@ -1,12 +1,14 @@
 <template>
     <div :class="componentStyle">
-        <div :class="titleStyle" v-if="group.title">
-            <span class="block float-left border-r border-40 pr-4 mr-4"><!--
-             --><span class="text-60 text-xs">#</span><!--
-             --><span class="text-80">{{index+1}}</span>
-            </span>
-            <span class="font-bold">{{group.title}}</span>
-            <span>Send to translation</span>
+        <div :class="titleStyle" class="flex justify-between" v-if="group.title">
+            <div>
+                <span class="block float-left border-r border-40 pr-4 mr-4"><!--
+                --><span class="text-60 text-xs">#</span><!--
+                --><span class="text-80">{{index+1}}</span>
+                </span>
+                <span class="font-bold">{{group.title}}</span>
+            </div>
+            <span class="translate-button"><a href="#" @click.prevent="translate();" class="text-blue-400">Send to translation</a></span>
         </div>
         <component
             v-for="(item, index) in group.fields"
@@ -32,6 +34,20 @@ export default {
         },
         titleStyle() {
             return ['pb-4', 'border-b', 'border-40'];
+        }
+    },
+
+    methods: {
+        translate() {
+            if (confirm('Are you sure you want to send this to translation? Please make sure the text is in english')) {
+                axios.get('/custom-nova-actions/translate/partial', {
+                    params: {
+                        id: this.resourceId, 
+                        type: "App\\Models\\Story", 
+                        content_id: this.group.key
+                    }
+                });
+            }
         }
     }
 }
