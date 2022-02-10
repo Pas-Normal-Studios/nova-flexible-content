@@ -8,7 +8,7 @@
                 </span>
                 <span class="font-bold">{{group.title}}</span>
             </div>
-            <span class="translate-button"><a href="#" @click.prevent="translate();" class="text-blue-400">Send to translation</a></span>
+            <span class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
         </div>
         <component
             v-for="(item, index) in group.fields"
@@ -39,6 +39,8 @@ export default {
 
     methods: {
         translate() {
+            console.log(this.group);
+            console.log(this.resource);
             if (confirm('Are you sure you want to send this to translation? Please make sure the text is in english')) {
                 axios.get('/custom-nova-actions/translate/partial', {
                     params: {
