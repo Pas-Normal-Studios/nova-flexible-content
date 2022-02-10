@@ -8,7 +8,7 @@
                 </span>
                 <span class="font-bold">{{group.title}}</span>
             </div>
-            <span class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
+            <span v-if="allowTranslation" class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
         </div>
         <component
             v-for="(item, index) in group.fields"
@@ -34,6 +34,18 @@ export default {
         },
         titleStyle() {
             return ['pb-4', 'border-b', 'border-40'];
+        },
+        allowTranslation(layout) {
+            return [
+            'text-section',
+            'text-section-with-image',
+            'story-top-section',
+            'bullet-point',
+            'hero-module',
+            'product-slider-section',
+            'collapsible-section',
+            'text-section-with-landscape-image'
+            ].indexOf(layout) > -1; 
         }
     },
 
