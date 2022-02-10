@@ -8,7 +8,7 @@
                 </span>
                 <span class="font-bold">{{group.title}}</span>
             </div>
-            <span v-if="allowTranslation" class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
+            <span v-if="allowTranslation(group.name)" class="translate-button"><a href="#" @click.prevent="translate();" class="text-primary">Send to translation</a></span>
         </div>
         <component
             v-for="(item, index) in group.fields"
@@ -34,8 +34,12 @@ export default {
         },
         titleStyle() {
             return ['pb-4', 'border-b', 'border-40'];
-        },
+        }
+    },
+
+    methods: {
         allowTranslation(layout) {
+            console.log(layout);
             return [
             'text-section',
             'text-section-with-image',
@@ -46,13 +50,8 @@ export default {
             'collapsible-section',
             'text-section-with-landscape-image'
             ].indexOf(layout) > -1; 
-        }
-    },
-
-    methods: {
+        },
         translate() {
-            console.log(this.group);
-            console.log(this.resource);
             if (confirm('Are you sure you want to send this to translation? Please make sure the text is in english')) {
                 axios.get('/custom-nova-actions/translate/partial', {
                     params: {
