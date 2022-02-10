@@ -59,6 +59,8 @@ export default {
                         type: "App\\Models\\Story", 
                         content_id: this.group.key
                     }
+                }).then(() => {
+                    alert('Element sent to translation');
                 });
             }
         }
